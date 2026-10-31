@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Commonplace frontend
 
-## Getting Started
+Next.js frontend for the Expense Split API.
 
-First, run the development server:
+## Run locally
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Start the backend from `../backend` using its documented setup. The API should be reachable at `http://localhost:8000`.
+2. Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_API_URL` if the backend uses another address.
+3. Install dependencies and start the frontend:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+	```bash
+	npm install
+	npm run dev
+	```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Open `http://localhost:3000`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Included screens
 
-## Learn More
+- Landing, sign-in, and account registration
+- Dashboard with group spending and per-group net balances
+- Group activity, expense create/edit/delete, balances, and adding members by email
+- Personal profile with a preferred display currency (defaults to INR) and create-group entry point
+- Fixed group currency selected at group creation, with converted estimates shown alongside group-currency figures
+- Equal, specific-amount, and weighted-parts expense splits
 
-To learn more about Next.js, take a look at the following resources:
+Authentication uses a bearer token stored in browser local storage. The API base URL defaults to `http://localhost:8000` and can be changed with `NEXT_PUBLIC_API_URL`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Backend gaps
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The current backend does not provide endpoints for deleting a group, removing another member, or editing profile details. The related group-management controls are shown as unavailable; they do not report success or send unsupported requests. Leaving a group is supported.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Exchange conversions are estimates from the backend exchange-rate endpoint. Group totals, allocations, and settlements stay in the group's currency. Dashboard aggregate totals use the profile currency; if a rate is unavailable the summary says so rather than combining unconverted values.
